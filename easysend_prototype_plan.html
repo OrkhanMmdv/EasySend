@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EasySend — Website Prototype Plan</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    color: #1a1a1a;
+    background: #ffffff;
+    line-height: 1.6;
+  }
+
+  nav {
+    background: #2e7d32;
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo { color: #fff; font-size: 22px; font-weight: bold; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { color: #c8e6c9; text-decoration: none; font-size: 14px; }
+  .nav-links a:hover { color: #fff; }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 0 32px; }
+  section { padding: 50px 0; border-bottom: 1px solid #e0e0e0; }
+
+  #hero { background: #f1f8e9; padding: 60px 0; }
+  #hero h1 { font-size: 32px; color: #1b5e20; margin-bottom: 10px; }
+  #hero p { color: #555; max-width: 580px; margin-bottom: 6px; }
+  .meta { font-size: 13px; color: #888; margin-top: 14px; }
+
+  h2 { font-size: 22px; color: #1b5e20; margin-bottom: 6px; }
+  .sub { color: #666; margin-bottom: 28px; font-size: 14px; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .stat { background: #f1f8e9; border: 1px solid #a5d6a7; border-radius: 6px; padding: 20px; text-align: center; }
+  .stat .num { font-size: 28px; font-weight: bold; color: #2e7d32; }
+  .stat .lbl { font-size: 12px; color: #555; margin-top: 4px; }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .three { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  .card { border: 1px solid #c8e6c9; border-radius: 6px; padding: 22px; background: #fff; }
+  .card h3 { font-size: 16px; color: #1b5e20; margin-bottom: 8px; }
+  .card p { color: #555; font-size: 14px; }
+  .icon { font-size: 26px; margin-bottom: 10px; display: block; }
+
+  /* STEPS */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .step { border: 1px solid #c8e6c9; border-radius: 6px; padding: 20px; background: #f9fbe7; text-align: center; }
+  .step-num {
+    width: 30px; height: 30px; background: #2e7d32; color: #fff;
+    border-radius: 50%; font-weight: bold; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 10px;
+  }
+  .step h3 { font-size: 14px; color: #1b5e20; margin-bottom: 6px; }
+  .step p { font-size: 12px; color: #555; }
+
+  ul.check { list-style: none; }
+  ul.check li { padding: 5px 0; font-size: 14px; color: #444; border-bottom: 1px solid #f0f0f0; }
+  ul.check li:last-child { border-bottom: none; }
+  ul.check li::before { content: "✓ "; color: #2e7d32; font-weight: bold; }
+
+  /* WEEK CARDS */
+  .week { display: grid; grid-template-columns: 140px 1fr; border: 1px solid #c8e6c9; border-radius: 6px; margin-bottom: 12px; overflow: hidden; }
+  .week-left { background: #2e7d32; color: #fff; padding: 20px 16px; }
+  .week-left .wnum { font-size: 11px; text-transform: uppercase; opacity: 0.75; margin-bottom: 4px; }
+  .week-left .wtitle { font-weight: bold; font-size: 14px; line-height: 1.3; }
+  .week-right { padding: 20px 24px; }
+  .week-right ul { list-style: none; }
+  .week-right ul li { font-size: 13px; color: #444; padding: 3px 0; }
+  .week-right ul li::before { content: "→ "; color: #2e7d32; }
+  .goal { display: inline-block; margin-top: 10px; background: #e8f5e9; border: 1px solid #a5d6a7; color: #2e7d32; font-size: 12px; padding: 3px 10px; border-radius: 4px; }
+
+  /* PAGES TABLE */
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { background: #2e7d32; color: #fff; padding: 10px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #e8f5e9; color: #444; vertical-align: top; }
+  tr:nth-child(even) td { background: #f9fbe7; }
+
+  /* TECH */
+  .tech-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  .pill { background: #e8f5e9; border: 1px solid #a5d6a7; color: #2e7d32; font-size: 12px; padding: 4px 12px; border-radius: 20px; }
+
+  /* RISKS */
+  .risk { display: flex; gap: 12px; align-items: flex-start; border: 1px solid #c8e6c9; border-radius: 6px; padding: 16px; margin-bottom: 10px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .dot.h { background: #e53935; }
+  .dot.m { background: #fb8c00; }
+  .dot.l { background: #43a047; }
+  .risk h3 { font-size: 14px; color: #1b5e20; margin-bottom: 4px; }
+  .risk p { font-size: 13px; color: #555; }
+
+  /* TEAM */
+  .team { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .member { border: 1px solid #c8e6c9; border-radius: 6px; padding: 28px 16px; text-align: center; background: #f9fbe7; }
+  .av { width: 56px; height: 56px; background: #2e7d32; color: #fff; border-radius: 50%; font-size: 18px; font-weight: bold; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+  .member h3 { font-size: 15px; color: #1b5e20; margin-bottom: 3px; }
+  .member .mid { font-size: 12px; color: #888; margin-bottom: 8px; }
+  .badge { display: inline-block; background: #2e7d32; color: #fff; font-size: 11px; padding: 3px 10px; border-radius: 20px; }
+
+  footer { background: #2e7d32; color: #c8e6c9; text-align: center; padding: 28px; font-size: 13px; }
+  footer strong { color: #fff; font-size: 17px; display: block; margin-bottom: 6px; }
+
+  @media(max-width: 680px) {
+    .stats, .steps, .two, .three, .team { grid-template-columns: 1fr; }
+    .week { grid-template-columns: 1fr; }
+    nav { flex-direction: column; gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">EasySend</div>
+  <div class="nav-links">
+    <a href="#overview">Overview</a>
+    <a href="#how">How It Works</a>
+    <a href="#pages">Website Pages</a>
+    <a href="#plan">8-Week Plan</a>
+    <a href="#team">Team</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="overview">
+  <div class="container">
+    <h1>EasySend — Website Prototype Plan</h1>
+    <p>Send and receive items through commercial flight passengers. EasySend is a web platform connecting senders with travelers on the same route — cheaper and faster than traditional couriers.</p>
+    <p style="margin-top:8px; color:#555;">This document outlines the website pages, features, and 8-week development plan for the EasySend prototype.</p>
+    <div class="meta">Orkhan Mammadov (231ADB138) · Kamal Ibrahimov (231ADB133) · Orkhan Sultanov (231ADB131)</div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section>
+  <div class="container">
+    <h2>At a Glance</h2>
+    <p class="sub">Core value EasySend delivers.</p>
+    <div class="stats">
+      <div class="stat"><div class="num">3x</div><div class="lbl">Cheaper than courier</div></div>
+      <div class="stat"><div class="num">48h</div><div class="lbl">Max delivery time</div></div>
+      <div class="stat"><div class="num">12%</div><div class="lbl">Platform commission</div></div>
+      <div class="stat"><div class="num">5 kg</div><div class="lbl">Max package weight</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM & SOLUTION -->
+<section>
+  <div class="container">
+    <h2>Problem & Solution</h2>
+    <p class="sub">Why EasySend exists.</p>
+    <div class="two">
+      <div class="card">
+        <span class="icon">🚧</span>
+        <h3>The Problem</h3>
+        <p>International shipping is expensive and slow. Small senders in regions like Azerbaijan pay high courier fees and wait days or weeks, with no visibility along the way.</p>
+      </div>
+      <div class="card">
+        <span class="icon">✈️</span>
+        <h3>Our Solution</h3>
+        <p>EasySend connects senders with passengers flying to the same destination. Travelers carry the item using spare luggage allowance and earn money. Everyone wins.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <h2>How It Works</h2>
+    <p class="sub">4 simple steps on the website.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Post a Package</h3>
+        <p>Sender fills a web form with destination, weight, and item details.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Traveler Accepts</h3>
+        <p>A verified traveler on the same route accepts the request online.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Meet & Fly</h3>
+        <p>They meet near the airport. Traveler takes the package on the flight.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Confirm Delivery</h3>
+        <p>Recipient enters OTP on the website. Traveler gets paid automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WEBSITE PAGES -->
+<section id="pages">
+  <div class="container">
+    <h2>Website Pages to Build</h2>
+    <p class="sub">Every page needed for the prototype — and what goes on each one.</p>
+
+    <table>
+      <tr>
+        <th>Page</th>
+        <th>What It Contains</th>
+        <th>Who Uses It</th>
+      </tr>
+      <tr>
+        <td><strong>Home</strong></td>
+        <td>Hero headline, how it works section, call-to-action buttons (Send / Carry)</td>
+        <td>Everyone</td>
+      </tr>
+      <tr>
+        <td><strong>Sign Up / Login</strong></td>
+        <td>Email + password form, choose role: Sender or Traveler</td>
+        <td>Everyone</td>
+      </tr>
+      <tr>
+        <td><strong>Post a Package</strong></td>
+        <td>Form: destination city, package weight, item description, budget, date needed</td>
+        <td>Sender</td>
+      </tr>
+      <tr>
+        <td><strong>Browse Requests</strong></td>
+        <td>List of open delivery requests filtered by route, weight, and date</td>
+        <td>Traveler</td>
+      </tr>
+      <tr>
+        <td><strong>Request Detail</strong></td>
+        <td>Full package info, sender rating, "Accept" button</td>
+        <td>Traveler</td>
+      </tr>
+      <tr>
+        <td><strong>My Deliveries</strong></td>
+        <td>List of active and past deliveries with status labels</td>
+        <td>Sender & Traveler</td>
+      </tr>
+      <tr>
+        <td><strong>Tracking Page</strong></td>
+        <td>Current delivery status: Posted → Accepted → In Transit → Delivered</td>
+        <td>Sender & Recipient</td>
+      </tr>
+      <tr>
+        <td><strong>Chat</strong></td>
+        <td>Simple message thread between sender and traveler</td>
+        <td>Sender & Traveler</td>
+      </tr>
+      <tr>
+        <td><strong>Profile</strong></td>
+        <td>User photo, name, rating, number of deliveries completed</td>
+        <td>Everyone</td>
+      </tr>
+      <tr>
+        <td><strong>Confirm Delivery</strong></td>
+        <td>OTP entry field for recipient to confirm package received</td>
+        <td>Recipient</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- USER ROLES -->
+<section>
+  <div class="container">
+    <h2>User Roles</h2>
+    <p class="sub">What each user does on the website.</p>
+    <div class="three">
+      <div class="card">
+        <span class="icon">📤</span>
+        <h3>Sender</h3>
+        <ul class="check">
+          <li>Creates account and logs in</li>
+          <li>Posts a package request</li>
+          <li>Chats with the traveler</li>
+          <li>Tracks delivery status</li>
+          <li>Pays through the website</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="icon">🧳</span>
+        <h3>Traveler</h3>
+        <ul class="check">
+          <li>Creates account and logs in</li>
+          <li>Browses open requests</li>
+          <li>Accepts a delivery</li>
+          <li>Chats with the sender</li>
+          <li>Gets paid after delivery</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="icon">📬</span>
+        <h3>Recipient</h3>
+        <ul class="check">
+          <li>Receives email with OTP</li>
+          <li>Opens tracking link</li>
+          <li>Enters OTP to confirm</li>
+          <li>Rates the traveler</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section>
+  <div class="container">
+    <h2>Tech Stack</h2>
+    <p class="sub">Simple tools to build the website prototype.</p>
+    <div class="two">
+      <div class="card">
+        <span class="icon">🖥️</span>
+        <h3>Frontend (what users see)</h3>
+        <p>The visual part of the website — pages, buttons, forms, and navigation.</p>
+        <div class="tech-row">
+          <span class="pill">HTML</span>
+          <span class="pill">CSS</span>
+          <span class="pill">JavaScript</span>
+          <span class="pill">React</span>
+        </div>
+      </div>
+      <div class="card">
+        <span class="icon">⚙️</span>
+        <h3>Backend (how it works)</h3>
+        <p>Handles accounts, storing data, sending emails, and processing payments.</p>
+        <div class="tech-row">
+          <span class="pill">Node.js</span>
+          <span class="pill">Express</span>
+          <span class="pill">PostgreSQL</span>
+          <span class="pill">Stripe</span>
+          <span class="pill">Nodemailer</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8-WEEK PLAN -->
+<section id="plan">
+  <div class="container">
+    <h2>8-Week Development Plan</h2>
+    <p class="sub">What to build each week for the website prototype.</p>
+
+    <div class="week">
+      <div class="week-left">
+        <div class="wnum">Week 1</div>
+        <div class="wtitle">Plan & Set Up</div>
+      </div>
+      <div class="week-right">
+        <ul>
+          <li>Decide which pages to build first (Home, Sign Up, Post Package)</li>
+          <li>Set up the project: create GitHub repo, folder structure</li>
+          <li>Install tools: Node.js, React, database</li>
+          <li>Sketch all 10 pages on paper — agree on the layout as a team</li>
+        </ul>
+        <span class="goal">Output: Project set up + paper sketches of all pages</span>
+      </div>
+    </div>
+
+    <div class="week">
+      <div class="week-left">
+        <div class="wnum">Week 2</div>
+        <div class="wtitle">Home Page + Sign Up</div>
+      </div>
+      <div class="week-right">
+        <ul>
+          <li>Build the Home page: headline, how it works section, Send / Carry buttons</li>
+          <li>Build Sign Up and Login pages with a form</li>
+          <li>Add role selection: "I want to send" or "I want to carry"</li>
+          <li>Make it work — user can register and log in</li>
+        </ul>
+        <span class="goal">Output: Live Home page + working Sign Up / Login</span>
+      </div>
+    </div>
+
+    <div class="week">
+      <div class="week-left">
+        <div class="wnum">Week 3</div>
+        <div class="wtitle">Post Package + Browse Requests</div>
+      </div>
+      <div class="week-right">
+        <ul>
+          <li>Build the "Post a Package" form page (destination, weight, description, budget)</li>
+          <li>Save form data to the database when submitted</li>
+          <li>Build the "Browse Requests" page — show posted packages as cards</li>
+          <li>Add basic filtering: by destination city</li>
+        </ul>
+        <span class="goal">Output: Sender can post, traveler can browse</span>
+      </div>
+    </div>
+
+    <div class="week">
+      <div class="week-left">
+        <div class="wnum">Week 4</div>
+        <div class="wtitle">Accept Delivery + My Deliveries</div>
+      </div>
+      <div class="week-right">
+        <ul>
+          <li>Add "Accept" button on the request detail page</li>
+          <li>When accepted, update status from "Open" to "Accepted" in database</li>
+          <li>Build "My Deliveries" page — list of deliveries for sender and traveler</li>
+          <li>Show status label on each delivery: Open / Accepted / In Transit / Delivered</li>
+        </ul>
+        <span class="goal">Output: Traveler can accept, both sides see their deliveries</span>
+      </div>
+    </div>
+
+    <div class="week">
+      <div class="week-left">
+        <div class="wnum">Week 5</div>
+        <div class="wtitle">Chat + Tracking Page</div>
+      </div>
+      <div class="week-right">
+        <ul>
+          <li>Build a simple message thread between sender and traveler</li>
+          <li>Messages saved to database, refresh when page reloads</li>
+          <li>Build the Tracking page — show delivery steps as a visual progress bar</li>
+          <li>Steps: Posted → Accepted → In Transit → Delivered</li>
+        </ul>
+        <span class="goal">Output: Working chat + delivery tracking page</span>
+      </div>
+    </div>
+
+    <div class="week">
+      <div class="week-left">
+        <div class="wnum">Week 6</div>
+        <div class="wtitle">OTP Confirmation + Profile Page</div>
+      </div>
+      <div class="week-right">
+        <ul>
+          <li>When traveler marks "Delivered", send a 6-digit OTP to the recipient's email</li>
+          <li>Build the OTP entry page — recipient types code to confirm delivery</li>
+          <li>On confirmation, mark delivery as complete and release payment</li>
+          <li>Build the Profile page — show name, photo, rating, completed deliveries</li>
+        </ul>
+        <span class="goal">Output: Full delivery flow works end to end</span>
+      </div>
+    </div>
+
+    <div class="week">
+      <div class="week-left">
+        <div class="wnum">Week 7</div>
+        <div class="wtitle">Fix, Polish & Test</div>
+      </div>
+      <div class="week-right">
+        <ul>
+          <li>Go through the full flow yourself — find any broken steps</li>
+          <li>Fix bugs, improve button labels, fix any confusing pages</li>
+          <li>Make the website look clean on both desktop and mobile</li>
+          <li>Ask 3 people outside the team to try the website and note feedback</li>
+        </ul>
+        <span class="goal">Output: Polished, working website prototype</span>
+      </div>
+    </div>
+
+    <div class="week">
+      <div class="week-left">
+        <div class="wnum">Week 8</div>
+        <div class="wtitle">Deploy + Present</div>
+      </div>
+      <div class="week-right">
+        <ul>
+          <li>Deploy the website online so it's accessible by URL (use Vercel or Railway — both free)</li>
+          <li>Record a 2-minute screen demo walking through the full flow</li>
+          <li>Prepare presentation slides: Problem, Solution, Demo, Business Model</li>
+          <li>Be ready to show the live website during the presentation</li>
+        </ul>
+        <span class="goal">Output: Live website URL + demo video + slides</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERABLES TABLE -->
+<section>
+  <div class="container">
+    <h2>Deliverables Checklist</h2>
+    <p class="sub">What to have ready by the end of each week.</p>
+    <table>
+      <tr>
+        <th>Week</th>
+        <th>Deliverable</th>
+        <th>Tool</th>
+      </tr>
+      <tr><td>1</td><td>Paper sketches of all 10 pages + project set up</td><td>Pen & paper + GitHub</td></tr>
+      <tr><td>2</td><td>Home page + working Sign Up / Login</td><td>React + Node.js</td></tr>
+      <tr><td>3</td><td>Post Package form + Browse Requests page</td><td>React + PostgreSQL</td></tr>
+      <tr><td>4</td><td>Accept delivery flow + My Deliveries page</td><td>React + PostgreSQL</td></tr>
+      <tr><td>5</td><td>Chat feature + Tracking page</td><td>React + Node.js</td></tr>
+      <tr><td>6</td><td>OTP confirmation + Profile page</td><td>Nodemailer + Stripe</td></tr>
+      <tr><td>7</td><td>Bug fixes + mobile-friendly layout</td><td>CSS + browser testing</td></tr>
+      <tr><td>8</td><td>Live URL + demo video + presentation slides</td><td>Vercel + Loom + PowerPoint</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- RISKS -->
+<section>
+  <div class="container">
+    <h2>Risks to Know About</h2>
+    <p class="sub">Common issues and how to avoid them.</p>
+    <div class="risk">
+      <div class="dot h"></div>
+      <div><h3>Running out of time on complex features</h3><p>If chat or payments take too long, skip them in Week 5–6 and fake them with static data. Show a "Chat coming soon" placeholder. Delivery of the full flow matters more than perfect features.</p></div>
+    </div>
+    <div class="risk">
+      <div class="dot h"></div>
+      <div><h3>Backend bugs blocking the frontend</h3><p>Build with dummy/hardcoded data first. Connect the real database only after the page looks correct. Don't wait for the backend to design the frontend.</p></div>
+    </div>
+    <div class="risk">
+      <div class="dot m"></div>
+      <div><h3>Website not working on mobile</h3><p>Use CSS Flexbox or a simple framework like Bootstrap from the start. Check on phone every week, not only at the end.</p></div>
+    </div>
+    <div class="risk">
+      <div class="dot l"></div>
+      <div><h3>Deployment issues in Week 8</h3><p>Don't wait until Week 8 to try deploying. Try Vercel in Week 5 or 6 so there are no surprises during the presentation.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- BUSINESS -->
+<section>
+  <div class="container">
+    <h2>Business Model</h2>
+    <p class="sub">How EasySend makes money.</p>
+    <div class="three">
+      <div class="card">
+        <span class="icon">💰</span>
+        <h3>12% Commission</h3>
+        <p>EasySend takes 12% of the delivery fee on every completed transaction.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🛡️</span>
+        <h3>Insurance Fee</h3>
+        <p>Optional item insurance for senders. EasySend earns a share from the insurance partner.</p>
+      </div>
+      <div class="card">
+        <span class="icon">⭐</span>
+        <h3>Pro Subscription</h3>
+        <p>Frequent senders pay monthly for priority matching and bulk discounts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="container">
+    <h2>Team</h2>
+    <p class="sub">Academic project — entrepreneurship course · 2025.</p>
+    <div class="team">
+      <div class="member">
+        <div class="av">OM</div>
+        <h3>Orkhan Mammadov</h3>
+        <div class="mid">231ADB138</div>
+        <span class="badge">Product Lead</span>
+      </div>
+      <div class="member">
+        <div class="av">KI</div>
+        <h3>Kamal Ibrahimov</h3>
+        <div class="mid">231ADB133</div>
+        <span class="badge">Business & Strategy</span>
+      </div>
+      <div class="member">
+        <div class="av">OS</div>
+        <h3>Orkhan Sultanov</h3>
+        <div class="mid">231ADB131</div>
+        <span class="badge">Tech & Design</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <strong>EasySend</strong>
+  Website Prototype Plan · 8 Weeks · Academic Project 2025<br>
+  Orkhan Mammadov · Kamal Ibrahimov · Orkhan Sultanov
+</footer>
+
+</body>
+</html>
